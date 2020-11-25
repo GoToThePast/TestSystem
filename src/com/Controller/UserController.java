@@ -2,6 +2,9 @@ package com.Controller;
 
 import com.Entity.User;
 import com.Service.UserService;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,33 +12,86 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 @WebServlet(name = "UserController",urlPatterns = "/userServlet")
 public class UserController extends HttpServlet {
     private UserService userService=new UserService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
-    }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
+        String contentType = request.getContentType();
+        System.out.println("contentType="+contentType);
+        if ("null".equals(contentType))
+        {
+            register(request,response);
+            return;
+        }
+
         String method = request.getParameter("method");
         if(method.equals("login"))
             login(request,response);
         if(method.equals("register"))
             register(request,response);
-
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 
     private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user=new User();
-        user.setUsername(request.getParameter("username"));
-        user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
-        user.setAge(Integer.parseInt(request.getParameter("age")));
-        user.setSex(request.getParameter("sex"));
-        user.setRole(request.getParameter("role"));
-        user.setTelephone(request.getParameter("telephone"));
+        User user = null;
+        //获取上传的图片
+        String photoPath = request.getServletContext().getRealPath("/photo/");
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        try{
+            List<FileItem> items = upload.parseRequest(request);
+            if (!items.isEmpty()){
+                 user=new User();
+            }
+            Iterator<FileItem> iterator = items.iterator();
+            while (iterator.hasNext()){
+                FileItem item = iterator.next();
+                if (item.isFormField()){
+                    if (item.getFieldName().equals("username")) {
+                        user.setUsername(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                    else if (item.getFieldName().equals("password")) {
+                        user.setPassword(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                    else if (item.getFieldName().equals("name")) {
+                        user.setName(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                    else if (item.getFieldName().equals("age")) {
+                        user.setAge(Integer.parseInt(item.getString()));
+                    }
+                    else if (item.getFieldName().equals("sex")) {
+                        user.setSex(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                    else if (item.getFieldName().equals("role")) {
+                        user.setRole(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                    else if (item.getFieldName().equals("telephone")) {
+                        user.setTelephone(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                    }
+                }else{
+                    //加上系统毫秒数，防止文件重名
+                    String name = System.currentTimeMillis()+item.getName();
+                    System.out.println(photoPath + name);
+                    File file = new File(photoPath + name);
+                    item.write(file);
+                    //写入数据库
+                    user.setPicUrl("photo/"+name);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("上传文件出错");
+            return;
+        }
+
         //调用服务
         userService.insert(user);
         //跳转界面

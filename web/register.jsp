@@ -44,7 +44,8 @@
 				<h1>注册</h1>
 				<div class="alert-close"></div>
 			</div>
-			<form action="userServlet" method="get" id="form">
+
+			<form method="post" action="userServlet"  id="form" enctype="multipart/form-data">
 				<input type="hidden" name="method" value="register">
 				<li><input name="username" type="text" class="text" placeholder="请输入用户名">
 					</li>
@@ -59,6 +60,7 @@
 				<li><input name="age" type="text" placeholder="请输入年龄">
 					</li>
 				<li><input name="role" type="text" placeholder="请输入角色"></li>
+				<li><input name="picUrl" type="file" placeholder="请上传头像"></li>
 				<div class="clear"></div>
 				<div class="submit">
 					<input type="submit" value="Sign up" id="submit">

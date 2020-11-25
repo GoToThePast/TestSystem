@@ -19,9 +19,14 @@
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />你好：${username}</h1>
+    <h1><img src="${user.picUrl}" class="radius-circle rotate-hover" height="50" alt="" />你好：${username}</h1>
   </div>
-  <div class="head-l"> <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> &nbsp;&nbsp;<a class="button button-little bg-red" href="../../register.jsp"><span class="icon-power-off"></span> 退出登录</a> </div>
+  <div class="head-l">
+      <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> &nbsp;
+      &nbsp;
+      <a class="button button-little bg-red" href="../../register.jsp"><span class="icon-power-off"></span> 退出登录</a>
+      <a class="button button-little bg-purple" href=""><span class="icon-power-off"></span> 退出登录</a>
+  </div>
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>

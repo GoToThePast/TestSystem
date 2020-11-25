@@ -18,6 +18,17 @@ public class User {
     //角色
     private String role;
 
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    //头像
+    private String picUrl;
+
     public int getUser_id() {
         return user_id;
     }
@@ -93,6 +104,7 @@ public class User {
                 ", sex='" + sex + '\'' +
                 ", age=" + age +
                 ", role='" + role + '\'' +
+                ", picURl='" + picUrl + '\'' +
                 '}';
     }
 }

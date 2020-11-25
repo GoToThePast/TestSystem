@@ -42,7 +42,7 @@ template.query（sql语句，对应的Entity对象)
 
     @Override
     public void insert(User user) {
-        String sql="INSERT into user(username,password,name,telephone,sex,age,role ) VALUES(?,?,?,?,?,?,?);";
-        template.update(sql,user.getUsername(),user.getPassword(),user.getName(),user.getTelephone(),user.getSex(),user.getAge(),user.getRole());
+        String sql="INSERT into user(username,password,name,telephone,sex,age,role,picUrl ) VALUES(?,?,?,?,?,?,?,?);";
+        template.update(sql,user.getUsername(),user.getPassword(),user.getName(),user.getTelephone(),user.getSex(),user.getAge(),user.getRole(),user.getPicUrl());
     }
 }

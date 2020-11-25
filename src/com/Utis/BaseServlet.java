@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 public class BaseServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //  1.获取jsp传递的方法
+        //1.获取jsp传递的方法
         //2.反射对应的Servlet类
         //3.获取需要调用的方法
         //4.获取返回值

@@ -18,6 +18,7 @@ ul,li{ list-style-type:none;}
 .head-l{ float:left; margin-top:17px; margin-left:15px; }
 .head-l .button{ padding:8px 15px;}
 .head-l .bg-blue:hover{ background-color:#03b6fd;}
+.bg-purple{background-color: purple;}
 .leftnav{width:180px; height:100%; position:fixed; top:70px; left:0px;}
 .leftnav-title { height:50px; background:url(../images/bg2.jpg) no-repeat 0 -1000px;  color:#FFF; padding-left:22px;  font-size:14px; line-height:50px;}
 .leftnav-title span{ margin-right:10px;}
